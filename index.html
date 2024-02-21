@@ -4,19 +4,99 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>BCU23D IU2 - Block Explorer</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <h1>Block Explorer</h1>
-        <script src="./app.js" async defer></script>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>BCU23D IU2 - Block Explorer</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./style.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.5.0/web3.min.js"
+      integrity="sha512-FhAl50BpK3gf9K//lbAWek9EEQEtGQyyXZNc1fuwcC2tVf2cskiJBcumXY0zJksYtms6S5cqubp1MNfUYTkO2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="./app.js" type="module" defer></script>
+  </head>
+  <body>
+    <div class="container">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+    <header class="top-bar"><h1>Block Explorer</h1></header>
+    
+    <!--
+        TO-DO when the app is working properly.
+        
+        <div class="elogo-container">
+      <div class="elogo">
+        <div id="space">
+          <div class="elogo">
+            <div class="trif u1"></div>
+            <div class="trif u2"></div>
+            <div class="trif u3"></div>
+            <div class="trif u4"></div>
+            <div class="ct"></div>
+            <div class="trif l1"></div>
+            <div class="trif l4"></div>
+          </div>
+          <h1>ethereum</h1>
+        </div>
+      </div>
+    </div> -->
+    <main>
+      <div class="container">
+        <section>
+          <div class="form-control">
+            <input
+              type="text"
+              name="accountNumber"
+              id="accountNumber"
+              placeholder="Ange konto"
+            />
+
+            <button id="checkBalance" class="btn btn-primary">
+              Kolla kontobalans
+            </button>
+            <div>
+              <span>Eth Balance</span>
+            </div>
+            <div id="balance" class="balance"></div>
+          </div>
+          <div class="form-control">
+            <input
+              type="text"
+              name="amount"
+              id="amount"
+              placeholder="Ange värde att överföra"
+            />
+          </div>
+          <div class="form-control">
+            <input
+              type="text"
+              name="toAccountNumber"
+              id="toAccountNumber"
+              placeholder="Till konto"
+            />
+          </div>
+          <div class="form-control">
+            <button id="sendTx" class="btn btn-primary">Överför</button>
+          </div>
+        </section>
+        <hr />
+        <section>
+          <h4>Transaktioner</h4>
+          <div class="transactions-container">
+            <div><span>Från</span><span>Till</span><span>Ethers</span></div>
+            <div id="transactions"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+</div>
+  </body>
 </html>

@@ -1,0 +1,109 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e5799, #2989d8, #7db9e8);
+    color: #000000;
+    line-height: 1.6;
+    background-size: 600% 600%;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.top-bar {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.top-bar h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.form-control {
+    margin-bottom: 20px;
+}
+
+.form-control input[type="text"],
+.form-control button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    color: #000000; /* Text color */
+}
+
+.form-control input[type="text"] {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.form-control button {
+    background-color: #007bff;
+    cursor: pointer;
+}
+
+.form-control button:hover {
+    background-color: #0056b3;
+}
+
+.transactions-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.transactions-container div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.transactions-container div:first-child {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.balance {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+}
+
+/* 
+Ethereum animation
+*/
