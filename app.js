@@ -1,3 +1,6 @@
+// Connect wallet
+const connectWalletButton = document.querySelector('#connectWallet');
+
 // Access to the button #accountNumber
 const accountInput = document.querySelector('#accountNumber');
 // Access to the button #checkBalance
@@ -21,6 +24,18 @@ const rpc = new Web3('http://127.0.0.1:7545');
 
 // Set a let variable for account
 let account;
+
+async function connectWallet () {
+    // Request an account
+    if(typeof window.ethereum !== 'undefined') {
+        // Check if MetaMask is installed, having access to Ethereum network
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });    
+    }
+    else {
+        alert('Please install MetaMask extension to your browser');
+    }
+}
+
 
 function initApp () {
 console.log(rpc);
@@ -96,6 +111,8 @@ async function sendTransaction () {
 }
 
 document.addEventListener('DOMContentLoaded', initApp)
+// Connect an eventListener to the button #connectWallet
+connectWalletButton.addEventListener('click', connectWallet);
 // Connect an eventListener to the button #checkBalance
 checkBalanceButton.addEventListener('click', checkBalance);
 sendButton.addEventListener('click', sendTransaction);
