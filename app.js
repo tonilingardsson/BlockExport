@@ -23,9 +23,6 @@ async function checkBalance () {
     // Display the balance
     displayBalance.innerHTML = rpc.utils.fromWei(balance, 'ether');
 
-
-    // Display the balance
-    document.querySelector('#balance').innerHTML = balance;
 }
 
 document.addEventListener('DOMContentLoaded', initApp)
