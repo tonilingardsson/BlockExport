@@ -10,9 +10,13 @@ const toAccountInput = document.querySelector('#toAccountNumber');
 const valueInput = document.querySelector('#amount');
 // Access to the button #transfer
 const sendButton = document.querySelector('#sendTx');
+// Prepare to display the transactions information
+const transactionList = document.querySelector('#transactions');
 
 
 // To use Ganache, create a variable and set it to endpoint 'http://127.0.0.1:7545'
+// const rpc = new Web3('http://127.0.0.1:7545');
+// To use Sepolia testnet, create a variable and set it to endpoint 'https://rpc.sepolia.org'
 const rpc = new Web3('http://127.0.0.1:7545');
 
 // Set a let variable for account
@@ -29,8 +33,44 @@ async function checkBalance () {
     // Display the balance
     displayBalance.innerHTML = rpc.utils.fromWei(balance, 'ether');
 
+    // Get the lastest block. You can choose 'earliest', 'latest', 'pending', "safe", or "finalized"
+    // Documentation: https://web3js.readthedocs.io/en/v1.2.11/web3-eth.html#getblock
+    const block = await rpc.eth.getBlock('latest');
+
+    // Display the block
+    console.log(block);
+
+    // Display the block number
+    if(block === null) return;
+    const transactions = block.transactions;
+    if(block !== null) {
+        // If the transaction is not null, display it.
+        displayHistory(transactions);
+    }
 }
 
+async function displayHistory (transactions) {
+    // Clear the list from other accounts
+    transactionList.innerHTML = '';
+    // Run the loop for each transaction
+    for(let hash of transactions) {
+        // Get the transaction details. Documentation: https://web3js.readthedocs.io/en/v1.2.11/web3-eth.html#gettransaction
+        let trx = await rpc.eth.getTransaction(hash);
+        // Call the function sendTransaction (below) to display the information
+        createTranstactionList(trx);
+    }
+}
+
+// Display information about transactions of this account
+function createTranstactionList (transaction) {
+    transactionList.innerHTML += `
+        <span>${transaction.from}</span>
+        <span>${transaction.to}</span>
+        <span>${rpc.utils.fromWei(transaction.value, 'ether')} ETH</span>
+    `
+}
+
+// This funtions takes nowadays between 8 and 15 minutes in the Ethereum network
 async function sendTransaction () {
     // Fetch the account to sent the transaction
     const toAddress = toAccountInput.value;
