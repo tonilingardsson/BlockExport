@@ -20,6 +20,9 @@ async function checkBalance () {
     account = accountInput.value;
     // Get the balance of the account. Async! We need to await. Rpc from web3.js is an Eth library
     const balance = await rpc.eth.getBalance(account);
+    // Display the balance
+    displayBalance.innerHTML = balance;
+
 
     // Display the balance
     document.querySelector('#balance').innerHTML = balance;
