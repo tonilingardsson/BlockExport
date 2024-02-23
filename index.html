@@ -17,7 +17,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="./app.js" type="module" defer></script>
+    <script src="./newApp.js" type="module" defer></script>
   </head>
   <body>
     <div class="container">
@@ -70,7 +70,7 @@
           </div>
           <div class="form-control">
             <input
-              type="text"
+              type="number"
               name="amount"
               id="amount"
               placeholder="Write value to transfer"
@@ -95,6 +95,11 @@
             <div><span>From</span><span>To</span><span>Ethers</span></div>
             <div id="transactions"></div>
           </div>
+        </section> 
+        <section>
+          <h4>Block information</h4>
+          <div class="block-container">
+            <span>Latest block: </span><span id="latestBlock"></span></div>
         </section>
       </div>
     </main>

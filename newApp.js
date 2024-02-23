@@ -16,11 +16,14 @@ const sendButton = document.querySelector('#sendTx');
 // Prepare to display the transactions information
 const transactionList = document.querySelector('#transactions');
 
+const displayLatestBlock = document.querySelector('#latestBlock');
+
 
 // To use Ganache, create a variable and set it to endpoint 'http://127.0.0.1:7545'
 // const rpc = new Web3('http://127.0.0.1:7545');
 // To use Sepolia testnet, create a variable and set it to endpoint 'https://rpc.sepolia.org'
-const rpc = new Web3('https://eth-sepolia.g.alchemy.com/v2/0hsv8CFMaujxb8hnFk2_gZ2irlAizVK2');
+// const rpc = new Web3('https://eth-sepolia.g.alchemy.com/v2/0hsv8CFMaujxb8hnFk2_gZ2irlAizVK2');
+
 
 // Set a let variable for account
 let account;
@@ -38,30 +41,19 @@ async function connectWallet () {
 
 
 function initApp () {
-console.log(rpc);
+
 }
 
 async function checkBalance () {
     account = accountInput.value;
     // Get the balance of the account. Async! We need to await. Rpc from web3.js is an Eth library
-    const balance = await rpc.eth.getBalance(account);
+    const balance = await window.ethereum.request({ method: 'eth_getBalance', params: [account, 'latest'] });
+    const formattedBalance = parseInt(balance) / Math.pow(10, 18);
     // Display the balance
-    displayBalance.innerHTML = await rpc.utils.fromWei(balance, 'ether');
+    displayBalance.innerHTML = formattedBalance + ' ETH';
 
     // Get the lastest block. You can choose 'earliest', 'latest', 'pending', "safe", or "finalized"
-    // Documentation: https://web3js.readthedocs.io/en/v1.2.11/web3-eth.html#getblock
-    const block = await rpc.eth.getBlock('latest');
-
-    // Display the block
-    console.log(block);
-
-    // Display the block number
-    if(block === null) return;
-    const transactions = block.transactions;
-    if(block !== null) {
-        // If the transaction is not null, display it.
-        displayHistory(transactions);
-    }
+   
 }
 
 async function displayHistory (transactions) {
@@ -91,24 +83,47 @@ async function sendTransaction () {
     const toAddress = toAccountInput.value;
     // Fetch the value (calling the var amount so it defers from value)
     const amount = valueInput.value;
+    // Convert the amount to wei, the standart value for the transaction on the Ethereum network
+    const transactionAmount = parseFloat(amount) * Math.pow(10, 18);
+
+
     // Send the transaction
     try {
         // Create the object to be sent. 
         // Documentation: https://web3js.readthedocs.io/en/v1.2.11/web3-eth.html#sendtransaction
-        const trx = await rpc.eth.sendTransaction(
-            // The transaction object:
-            {
-            from: account,
-            to: toAddress,
-            // Convert the amount to ether
-            value: rpc.utils.toWei(amount, 'ether'),
-            // gas: 21000
-            
+        const trx = await window.ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [{
+                from: account,
+                to: toAddress,
+                // Convert the amount to ether
+                value: Number(transactionAmount).toString(16),
+                gas: Number(21000).toString(16),
+                gasPrice: Number(20000000).toString(16)
+
+            }]
         });
+           
     } catch (error) {
         console.log(error);
     }
 }
+
+const lastestBlock = await window.ethereum.request({
+    "method": "eth_blockNumber",
+  });
+
+  displayLatestBlock.innerHTML = parseInt(lastestBlock);
+
+// Get the lastest block and look for our transaction. However, it may happen another transaction in the meantime.
+//   const getBlockByNumber = await window.ethereum.request({
+//     "method": "eth_getBlockByNumber",
+//     "params": [
+//       lastestBlock,
+//       true
+//     ]
+//   });
+// console.log(getBlockByNumber);
 
 document.addEventListener('DOMContentLoaded', initApp)
 // Connect an eventListener to the button #connectWallet
@@ -116,4 +131,3 @@ connectWalletButton.addEventListener('click', connectWallet);
 // Connect an eventListener to the button #checkBalance
 checkBalanceButton.addEventListener('click', checkBalance);
 sendButton.addEventListener('click', sendTransaction);
-console.log(await rpc.eth.accounts.wallet);
